@@ -16,10 +16,6 @@ public class SecurityProperties {
      */
     private String tokenSecret = "shopping123";
     /**
-     * 默认的token加密密钥
-     */
-    private String tokenExpiration = "shopping123";
-    /**
      * 默认的token过期秒数
      */
     private int tokenExpiresIn = 7200;
