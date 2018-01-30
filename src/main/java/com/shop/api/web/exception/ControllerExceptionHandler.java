@@ -23,7 +23,6 @@ public class ControllerExceptionHandler {
     public Map<String,Object> handleErrorException (ErrorException ex) {
         Map<String,Object> result = new HashMap<>();
         result.put("message",ex.getMessage());
-        log.info("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         return result;
     }
     @ExceptionHandler(UnauthorizedException.class)

@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
@@ -95,7 +96,7 @@ public class TokenUtils {
         } catch (ExpiredJwtException e) {
             throw new ErrorException("token已过期");
         } catch (Exception e) {
-            phone = null;
+            throw new SignatureException("TOKEN INVALID");
         }
         return phone;
     }
@@ -112,7 +113,7 @@ public class TokenUtils {
         } catch (ExpiredJwtException e) {
             throw new ErrorException("token已过期");
         } catch (Exception e) {
-            clientId = null;
+            throw new ErrorException("TOKEN INVALID");
         }
         return clientId;
     }
@@ -124,7 +125,7 @@ public class TokenUtils {
         } catch (ExpiredJwtException e) {
             throw new ExpiredJwtException(null,null,null);
         } catch (Exception e) {
-            claims = null;
+            throw new SignatureException("TOKEN INVALID");
         }
         return claims;
     }

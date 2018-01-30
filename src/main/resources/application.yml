@@ -1,16 +1,97 @@
+log4j:
+  appender:
+    file:
+      encoding: UTF-8
 spring:
+  data:
+    mongodb:
+      repositories:
+        enabled: true
+  messages:
+    encoding: UTF-8
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url:
-    username: root
-    password: 123456
-    initialize: false
-
-server:
-  port: 8090
-
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    maxPoolPreparedStatementPerConnectionSize: 20
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  jpa:
+    show-sql: true
+  profiles:
+    active: dev
 api:
   security:
     clientId: zhanchaoligeshoppingmall
     tokenSecret: shopping123
     tokenExpiresIn: 7200
+---
+# 生产环境
+spring:
+  profiles: pro
+  datasource:
+    url: jdbc:mysql://139.196.170.245/medical?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: QAZwsxEDCrfv1234!@#$
+  data:
+    mongodb:
+#      uri: mongodb://139.196.170.245:27017/medical
+      username: root
+      password: QAZwsxEDCrfv1234!@#$
+      authentication-database: admin
+      host: 139.196.170.245
+      port: 27017
+      database: medical
+server:
+  port: 8090
+  context-path: /
+---
+# 测试环境
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://121.43.97.150/medical?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: QAZwsxEDCrfv1234!@#$
+  data:
+    mongodb:
+#      uri: mongodb://121.43.97.150:27017/medical
+      username: root
+      password: QAZwsxEDCrfv1234!@#$
+      authentication-database: admin
+      host: 121.43.97.150
+      port: 27017
+      database: medical
+server:
+  port: 8090
+  context-path: /
+---
+# 开发环境
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+  data:
+    mongodb:
+#      uri: mongodb://localhost:27017/test
+      username: root
+      password: zclg
+      authentication-database: admin
+      host: 127.0.0.1
+      port: 27017
+      database: test
+server:
+  port: 8090
+  context-path: /
