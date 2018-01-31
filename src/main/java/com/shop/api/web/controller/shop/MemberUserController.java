@@ -7,6 +7,7 @@ import com.shop.api.web.model.member.MemberDiscount;
 import com.shop.api.web.model.member.MemberInfo;
 import com.shop.api.web.service.member.MemberDiscountService;
 import com.shop.api.web.service.member.MemberInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/member")
+@Slf4j
 public class MemberUserController {
 
     @Autowired
@@ -83,17 +85,37 @@ public class MemberUserController {
         // 扣款时check
         Long memberId = consumeDto.getMemberId();
         BigDecimal consumeMoney = consumeDto.getConsumeMoney();
+        Double discount = consumeDto.getDiscount();
         MemberInfo memberInfo = memberInfoService.findByIdFromMongo(memberId);
         BigDecimal storeAccount = memberInfo.getStoreAccount();
         int compareTo = storeAccount.compareTo(consumeMoney);
         if (compareTo < 0 ){
             return Result.errorResult("余额不足");
         }
+        // 有折扣时判断会员折扣是否存在
+        if (discount != null && discount < 1 && discount > 0) {
+            // 是否存在该折扣
+            boolean flag = false;
+            List<MemberDiscount> memberDiscounts = memberDiscountService.findByMemberIdFromMongo(memberId);
+            for (MemberDiscount memberDiscount : memberDiscounts) {
+                Integer discountSpecific = memberDiscount.getDiscountSpecific();
+                // 获取会员折扣
+                if (discountSpecific != null && discountSpecific.intValue() == 1) {
+                    double discountRate = memberDiscount.getDiscountRate();
+                    if (discount.doubleValue() == discountRate) {
+                        flag = true;
+                    }
+                }
+            }
+            if (!flag) {
+                return Result.errorResult("折扣错误");
+            }
+        }
         // 执行扣款操作
         memberInfo.setStoreAccount(storeAccount.subtract(consumeMoney));
         memberInfoService.saveToMongo(memberInfo);
         memberInfoService.save(memberInfo);
-
-        return Result.okResult("扣款成功");
+        log.info("扣款成功:"+consumeMoney);
+        return Result.okResult("扣款成功:"+consumeMoney);
     }
 }

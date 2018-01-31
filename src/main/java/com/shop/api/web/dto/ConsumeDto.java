@@ -14,6 +14,11 @@ public class ConsumeDto {
     @NotNull(message = "会员ID不能为空")
     private Long memberId;
     /**
+     * 会员ID
+     */
+    @NotNull(message = "会员折扣不能为空")
+    private Double discount;
+    /**
      * 储值卡消费金额
      */
     @NotNull(message = "消费金额不能为空")

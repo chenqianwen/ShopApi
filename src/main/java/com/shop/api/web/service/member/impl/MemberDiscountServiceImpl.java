@@ -16,6 +16,6 @@ public class MemberDiscountServiceImpl implements MemberDiscountService{
 
     @Override
     public List<MemberDiscount> findByMemberIdFromMongo(Long memberId) {
-        return mongoMemberDiscountDao.findByMemberId(memberId);
+        return mongoMemberDiscountDao.findByMemberIdAndValidPeriodFlag(memberId,0);
     }
 }

@@ -60,7 +60,7 @@ server:
 spring:
   profiles: test
   datasource:
-    url: jdbc:mysql://121.43.97.150/medical?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://139.196.170.245/medical?useUnicode=true&characterEncoding=utf-8
     username: root
     password: QAZwsxEDCrfv1234!@#$
   data:
@@ -69,7 +69,7 @@ spring:
       username: root
       password: QAZwsxEDCrfv1234!@#$
       authentication-database: admin
-      host: 121.43.97.150
+      host: 139.196.170.245
       port: 27017
       database: medical
 server:

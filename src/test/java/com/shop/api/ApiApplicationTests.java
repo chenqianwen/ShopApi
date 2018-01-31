@@ -47,41 +47,45 @@ public class ApiApplicationTests {
 		Runnable runnable1 = new Runnable() {
 			@Override
 			public void run() {
-				String uri = "/member/consume";
-				String token = "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRJZCI6InpoYW5jaGFvbGlnZXNob3BwaW5nbWFsbCIsInBob25lIjoiMTg4MTgyNzkyOTEiLCJleHAiOjE1MTczMDgzMjJ9.u-eWZy48IoRshbXWxj1RCQbtMpdtzfvwrvsPU4TFTrDH26abtG8-Tg26QV4YAU9lH_LCXFlSqoYtwOecXyW1JA";
-				ConsumeDto dto = new ConsumeDto();
-				dto.setMemberId(7L);
-				dto.setConsumeMoney(new BigDecimal(30000));
-				String response = null;
-				try {
-					response = mockMvc
-                            .perform(post(uri).contentType(MediaType.APPLICATION_JSON).content(JSON.toJSONString(dto))
-                                    .header("access_token", token))
-                            .andReturn().getResponse().getContentAsString();
-				} catch (Exception e) {
-					e.printStackTrace();
+				for (int i = 0; i < 20; i++) {
+					String uri = "/member/consume";
+					String token = "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRJZCI6InpoYW5jaGFvbGlnZXNob3BwaW5nbWFsbCIsInBob25lIjoiMTg4MTgyNzkyOTEiLCJleHAiOjE1MTczMDgzMjJ9.u-eWZy48IoRshbXWxj1RCQbtMpdtzfvwrvsPU4TFTrDH26abtG8-Tg26QV4YAU9lH_LCXFlSqoYtwOecXyW1JA";
+					ConsumeDto dto = new ConsumeDto();
+					dto.setMemberId(7L);
+					dto.setConsumeMoney(new BigDecimal(100));
+					String response = null;
+					try {
+						response = mockMvc
+								.perform(post(uri).contentType(MediaType.APPLICATION_JSON).content(JSON.toJSONString(dto))
+										.header("access_token", token))
+								.andReturn().getResponse().getContentAsString();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					log.info("runnable1返回值：" + response);
 				}
-				log.info("runnable1返回值："+response);
 			}
 		};
 		Runnable runnable2 = new Runnable() {
 			@Override
 			public void run() {
-				String uri = "/member/consume";
-				String token = "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRJZCI6InpoYW5jaGFvbGlnZXNob3BwaW5nbWFsbCIsInBob25lIjoiMTg4MTgyNzkyOTEiLCJleHAiOjE1MTczMDgzMjJ9.u-eWZy48IoRshbXWxj1RCQbtMpdtzfvwrvsPU4TFTrDH26abtG8-Tg26QV4YAU9lH_LCXFlSqoYtwOecXyW1JA";
-				ConsumeDto dto = new ConsumeDto();
-				dto.setMemberId(7L);
-				dto.setConsumeMoney(new BigDecimal(30000));
-				String response = null;
-				try {
-					response = mockMvc
-                            .perform(post(uri).contentType(MediaType.APPLICATION_JSON).content(JSON.toJSONString(dto))
-                                    .header("access_token", token))
-                            .andReturn().getResponse().getContentAsString();
-				} catch (Exception e) {
-					e.printStackTrace();
+				for (int i = 0; i < 20; i++) {
+					String uri = "/member/consume";
+					String token = "eyJhbGciOiJIUzUxMiJ9.eyJjbGllbnRJZCI6InpoYW5jaGFvbGlnZXNob3BwaW5nbWFsbCIsInBob25lIjoiMTg4MTgyNzkyOTEiLCJleHAiOjE1MTczMDgzMjJ9.u-eWZy48IoRshbXWxj1RCQbtMpdtzfvwrvsPU4TFTrDH26abtG8-Tg26QV4YAU9lH_LCXFlSqoYtwOecXyW1JA";
+					ConsumeDto dto = new ConsumeDto();
+					dto.setMemberId(7L);
+					dto.setConsumeMoney(new BigDecimal(100));
+					String response = null;
+					try {
+						response = mockMvc
+								.perform(post(uri).contentType(MediaType.APPLICATION_JSON).content(JSON.toJSONString(dto))
+										.header("access_token", token))
+								.andReturn().getResponse().getContentAsString();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					log.info("runnable2返回值：" + response);
 				}
-				log.info("runnable2返回值："+response);
 			}
 		};
 		runnable1.run();

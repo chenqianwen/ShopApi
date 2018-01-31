@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MongoMemberDiscountDao extends MongoRepository<MemberDiscount,Long> {
 
-    List<MemberDiscount> findByMemberId(Long memberId);
+    List<MemberDiscount> findByMemberIdAndValidPeriodFlag(Long memberId,int validPeriodFlag);
 }
 
